@@ -88,5 +88,31 @@ public class ParkingBoyTest {
         assertSame(null, ticket);
     }
 
+    @Test
+    public void should_not_get_ticket_when_park_null_car() {
+        //given
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        parkingLot.setParkedQuantity(10);
+        //when
+        Ticket ticket = parkingBoy.park(null);
 
+        //then
+        assertSame(null, ticket);
+    }
+
+    @Test
+    public void should_not_get_ticket_when_park_a_parking_lot_car() {
+        //given
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        parkingLot.setParkedQuantity(10);
+        //when
+        Ticket ticket = parkingBoy.park(car);
+        Ticket uselessTicket = parkingBoy.park(car);
+
+        //then
+        assertSame(null, uselessTicket);
+    }
 }
