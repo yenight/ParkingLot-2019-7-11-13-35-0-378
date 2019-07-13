@@ -74,5 +74,19 @@ public class ParkingBoyTest {
         assertSame(null, parkingBoy.fetch(hadUsedTicket));
     }
 
+    @Test
+    public void should_not_get_ticket_when_no_position_park_car() {
+        //given
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        parkingLot.setParkedQuantity(10);
+        //when
+        Ticket ticket = parkingBoy.park(car);
+
+        //then
+        assertSame(null, ticket);
+    }
+
 
 }

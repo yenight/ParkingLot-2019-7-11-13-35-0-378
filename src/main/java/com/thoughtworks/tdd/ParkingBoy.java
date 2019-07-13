@@ -9,7 +9,12 @@ public class ParkingBoy {
     }
 
     public Ticket park(Car car) {
-        return parkingLot.park(car);
+        if (car != null && !parkingLot.getParkingCarTicket().containsValue(car)) {
+            return parkingLot.park(car);
+        } else {
+            return null;
+        }
+
     }
 
     public Car fetch(Ticket ticket) {
