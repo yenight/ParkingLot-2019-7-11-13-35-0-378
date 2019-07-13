@@ -6,8 +6,8 @@ public class ParkingLot {
 
     private HashMap<Ticket, Car> parkingCarTicket;
 
-    public ParkingLot(HashMap<Ticket, Car> parkingCarTicket) {
-        this.parkingCarTicket = parkingCarTicket;
+    public ParkingLot() {
+        this.parkingCarTicket = new HashMap<>();
     }
 
     public Ticket park(Car car) {
@@ -15,6 +15,7 @@ public class ParkingLot {
         parkingCarTicket.put(ticket, car);
         return ticket;
     }
+
     public Car getCar(Ticket ticket) {
         return parkingCarTicket.get(ticket);
     }
