@@ -58,4 +58,21 @@ public class ParkingBoyTest {
 //        });
         assertSame(null, parkingBoy.fetch(wrongTicket));
     }
+
+    @Test
+    public void should_not_fetch_cars_when_ticket_is_used() {
+        //given
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        Ticket hadUsedTicket = new Ticket();
+        hadUsedTicket.setUsed(true);
+        //when
+        parkingBoy.park(car);
+
+        //then
+        assertSame(null, parkingBoy.fetch(hadUsedTicket));
+    }
+
+
 }

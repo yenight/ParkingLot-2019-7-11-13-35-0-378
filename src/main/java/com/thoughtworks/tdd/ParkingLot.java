@@ -17,6 +17,13 @@ public class ParkingLot {
     }
 
     public Car getCar(Ticket ticket) {
-        return parkingCarTicket.get(ticket);
+        if (ticket.isUsed()) {
+            return null;
+        }
+        Car car = parkingCarTicket.get(ticket);
+        if (car != null) {
+            parkingCarTicket.remove(ticket);
+        }
+        return car;
     }
 }
