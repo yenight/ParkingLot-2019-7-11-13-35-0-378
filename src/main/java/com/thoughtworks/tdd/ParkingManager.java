@@ -2,10 +2,11 @@ package com.thoughtworks.tdd;
 
 import java.util.List;
 
-public class ParkingManager {
+public class ParkingManager extends ParkingBoy{
     private List<ParkingBoy> parkingBoyList;
 
-    public ParkingManager(List<ParkingBoy> parkingBoyList) {
+    public ParkingManager(List<ParkingLot> parkingLots, List<ParkingBoy> parkingBoyList) {
+        super(parkingLots);
         this.parkingBoyList = parkingBoyList;
     }
 
@@ -20,4 +21,6 @@ public class ParkingManager {
     public Car callParkingBoyFetchCar(ParkingBoy parkingBoy, Ticket ticket) {
         return parkingBoy.fetch(ticket);
     }
+
+
 }

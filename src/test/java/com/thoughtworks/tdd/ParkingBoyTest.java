@@ -368,7 +368,7 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_get_a_ticket_when_manager_call_parking_boy_parks_car() {
+    public void should_fetch_car_when_manager_call_parking_boy_parks_car() {
         //given
         Car car = new Car();
 
@@ -401,11 +401,41 @@ public class ParkingBoyTest {
         parkingBoys.add(smartParkingBoy);
         parkingBoys.add(superSmartParkingBoy);
 
-        ParkingManager manager = new ParkingManager(parkingBoys);
+        ParkingManager manager = new ParkingManager(parkingLots, parkingBoys);
 
         //when
         Ticket ticket = manager.callParkingBoyParkCar(parkingBoy, car);
         Car fetchCar = manager.callParkingBoyFetchCar(parkingBoy, ticket);
+        //then
+        assertSame(car, fetchCar);
+    }
+
+    @Test
+    public void should_fetch_car_when_manager_parks_car() {
+        //given
+        Car car = new Car();
+
+        ParkingLot parkingLot = new ParkingLot(20);
+        ParkingLot parkingSecondLot = new ParkingLot(15);
+        ParkingLot parkingThridLot = new ParkingLot();
+        parkingLot.setParkedQuantity(7);
+        parkingSecondLot.setParkedQuantity(5);
+        parkingThridLot.setParkedQuantity(10);
+
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        parkingLots.add(parkingSecondLot);
+
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+
+        List<ParkingBoy> parkingBoys = new ArrayList<>();
+        parkingBoys.add(parkingBoy);
+
+        ParkingManager manager = new ParkingManager(parkingLots, parkingBoys);
+
+        //when
+        Ticket ticket = manager.park(car);
+        Car fetchCar = manager.fetch(ticket);
         //then
         assertSame(car, fetchCar);
     }
