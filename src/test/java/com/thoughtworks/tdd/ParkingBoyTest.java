@@ -271,6 +271,37 @@ public class ParkingBoyTest {
     }
 
     @Test
+    public void should_not_park_car_when_all_parking_lots_are_have_vacancy_and_no_provide_ticket() {
+        //given
+        Car car = new Car();
+
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingLot parkingSecondLot = new ParkingLot();
+        ParkingLot parkingThridLot = new ParkingLot();
+        parkingLot.setParkedQuantity(7);
+        parkingSecondLot.setParkedQuantity(5);
+        parkingThridLot.setParkedQuantity(10);
+
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        parkingLots.add(parkingSecondLot);
+        parkingLots.add(parkingThridLot);
+
+        SmartParkingBoy parkingBoy = new SmartParkingBoy(parkingLots);
+
+        //when
+        String wrongMessage = "";
+        Ticket ticket = parkingBoy.park(car);
+        Car fetchCar = parkingBoy.fetch(null);
+        if (fetchCar == null) {
+            wrongMessage = parkingBoy.giveFetchMessage(null);
+        }
+
+        //then
+        assertEquals("Please provide your parking ticket.", wrongMessage);
+    }
+
+    @Test
     public void should_park_car_in_most_quantity_parking_lot_when_parking_lots_are_have_different_capacity() {
         //given
         Car car = new Car();
@@ -295,5 +326,44 @@ public class ParkingBoyTest {
 
         //then
         assertSame(car, fetchCar);
+    }
+
+    @Test
+    public void should_not_fetch_cars_and_get_a_message_when_ticket_is_wrong_and_have_many_parking_lots() {
+        //given
+        Car car = new Car();
+
+        ParkingLot parkingLot = new ParkingLot(20);
+        ParkingLot parkingSecondLot = new ParkingLot(15);
+        ParkingLot parkingThridLot = new ParkingLot();
+        parkingLot.setParkedQuantity(7);
+        parkingSecondLot.setParkedQuantity(5);
+        parkingThridLot.setParkedQuantity(10);
+
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        parkingLots.add(parkingSecondLot);
+        parkingLots.add(parkingThridLot);
+
+        SuperSmartParkingBoy parkingBoy = new SuperSmartParkingBoy(parkingLots);
+
+        Ticket wrongTicket = new Ticket();
+        wrongTicket.setUsed(true);
+        Ticket wrongSecondTicket = new Ticket();
+        wrongSecondTicket.setWrong(true);
+
+        //when
+        String wrongMessage = "", wrongSecondMessage = "";
+        parkingBoy.park(car);
+        Car fetchCar = parkingBoy.fetch(wrongTicket);
+        if (fetchCar == null) {
+            wrongMessage = parkingBoy.giveFetchMessage(wrongTicket);
+        }
+        if (fetchCar == null) {
+            wrongSecondMessage = parkingBoy.giveFetchMessage(wrongSecondTicket);
+        }
+        //then
+        assertEquals("Unrecognized parking ticket.", wrongMessage);
+        assertEquals("Unrecognized parking ticket.", wrongSecondMessage);
     }
 }

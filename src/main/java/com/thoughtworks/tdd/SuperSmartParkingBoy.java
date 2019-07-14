@@ -17,7 +17,6 @@ public class SuperSmartParkingBoy extends ParkingBoy{
         double minQuantity = this.getParkingLots().stream()
                 .mapToDouble(x-> x.getParkedQuantity() * 1.0/x.getCapacity())
                 .min().orElse(-1);
-        System.out.println(minQuantity);
         List<ParkingLot> parkingLotByParkCar = this.getParkingLots().stream()
                 .filter(x -> x.getParkedQuantity() < x.getCapacity() && x.getParkedQuantity() * 1.0/x.getCapacity() == minQuantity)
                 .collect(Collectors.toList());
