@@ -439,4 +439,56 @@ public class ParkingBoyTest {
         //then
         assertSame(car, fetchCar);
     }
+
+    @Test
+    public void should_not_fetch_car_and_get_message_when_manager_call_parking_boy_parks_car() {
+        //given
+        Car car = new Car();
+
+        ParkingLot parkingLot = new ParkingLot(20);
+        ParkingLot parkingSecondLot = new ParkingLot(15);
+        ParkingLot parkingThridLot = new ParkingLot();
+        parkingLot.setParkedQuantity(7);
+        parkingSecondLot.setParkedQuantity(5);
+        parkingThridLot.setParkedQuantity(10);
+
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        parkingLots.add(parkingSecondLot);
+
+        List<ParkingLot> smartParkingLots = new ArrayList<>();
+        smartParkingLots.add(parkingSecondLot);
+        smartParkingLots.add(parkingThridLot);
+
+        List<ParkingLot> superParkingLots = new ArrayList<>();
+        superParkingLots.add(parkingLot);
+        superParkingLots.add(parkingSecondLot);
+        superParkingLots.add(parkingThridLot);
+
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(smartParkingLots);
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(superParkingLots);
+
+        List<ParkingBoy> parkingBoys = new ArrayList<>();
+        parkingBoys.add(parkingBoy);
+        parkingBoys.add(smartParkingBoy);
+        parkingBoys.add(superSmartParkingBoy);
+
+        ParkingManager manager = new ParkingManager(parkingLots, parkingBoys);
+
+        //when
+        String wrongParkMessage = "", wrongFetchMessage = "";
+        Ticket ticket = manager.callParkingBoyParkCar(parkingBoy, null);
+        if (ticket == null) {
+            wrongParkMessage = manager.giveParkMessage(null);
+        }
+        Car fetchCar = manager.callParkingBoyFetchCar(parkingBoy, null);
+        if (fetchCar == null) {
+            wrongFetchMessage = manager.giveFetchMessage(null);
+        }
+
+        //then
+        assertEquals("Not enough position.", wrongParkMessage);
+        assertEquals("Please provide your parking ticket.", wrongFetchMessage);
+    }
 }
