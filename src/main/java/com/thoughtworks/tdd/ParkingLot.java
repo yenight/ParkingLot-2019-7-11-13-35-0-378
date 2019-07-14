@@ -17,6 +17,10 @@ public class ParkingLot {
         this.parkingCarTicket = new HashMap<>();
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
+
     public HashMap<Ticket, Car> getParkingCarTicket() {
         return parkingCarTicket;
     }

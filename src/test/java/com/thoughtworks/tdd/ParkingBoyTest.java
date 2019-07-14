@@ -244,7 +244,7 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_park_car_in_most_quantity_parking_lot_when__parking_lots_are_have_vacancy() {
+    public void should_park_car_in_most_quantity_parking_lot_when_parking_lots_are_have_vacancy() {
         //given
         Car car = new Car();
 
@@ -270,4 +270,30 @@ public class ParkingBoyTest {
         assertSame(car, fetchCar);
     }
 
+    @Test
+    public void should_park_car_in_most_quantity_parking_lot_when_parking_lots_are_have_different_capacity() {
+        //given
+        Car car = new Car();
+
+        ParkingLot parkingLot = new ParkingLot(20);
+        ParkingLot parkingSecondLot = new ParkingLot(15);
+        ParkingLot parkingThridLot = new ParkingLot();
+        parkingLot.setParkedQuantity(7);
+        parkingSecondLot.setParkedQuantity(5);
+        parkingThridLot.setParkedQuantity(10);
+
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        parkingLots.add(parkingSecondLot);
+        parkingLots.add(parkingThridLot);
+
+        SuperSmartParkingBoy parkingBoy = new SuperSmartParkingBoy(parkingLots);
+
+        //when
+        Ticket ticket = parkingBoy.park(car);
+        Car fetchCar = parkingBoy.fetch(ticket);
+
+        //then
+        assertSame(car, fetchCar);
+    }
 }

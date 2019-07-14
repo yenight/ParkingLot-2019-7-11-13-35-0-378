@@ -20,7 +20,7 @@ public class ParkingBoy {
                 .filter(x -> x.getParkingCarTicket().containsValue(car))
                 .collect(Collectors.toList());
         List<ParkingLot> parkingLotByParkCar = parkingLots.stream()
-                .filter(x -> x.getParkedQuantity() < 10)
+                .filter(x -> x.getParkedQuantity() < x.getCapacity())
                 .collect(Collectors.toList());
         if (car != null && parkingLotByCarExist.size() == 0 && parkingLotByParkCar.size() > 0) {
             return parkingLotByParkCar.get(0).park(car);
