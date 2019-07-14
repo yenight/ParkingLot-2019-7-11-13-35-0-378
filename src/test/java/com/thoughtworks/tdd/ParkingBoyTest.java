@@ -221,4 +221,29 @@ public class ParkingBoyTest {
         //then
         assertSame(car, fetchCar);
     }
+
+    @Test
+    public void should_not_park_car_when_all_parking_lot_are_fulled() {
+        //given
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingLot parkingSecondLot = new ParkingLot();
+        parkingLot.setParkedQuantity(10);
+        parkingSecondLot.setParkedQuantity(10);
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        parkingLots.add(parkingSecondLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+
+        //when
+        String wrongMessage = "";
+        Ticket ticket = parkingBoy.park(car);
+        if (ticket == null) {
+            wrongMessage = parkingBoy.giveParkMessage(null);
+        }
+        //then
+        assertEquals("Not enough position.", wrongMessage);
+    }
+
+
 }
