@@ -19,7 +19,6 @@ public class ParkingBoy {
                 .mapToInt(ParkingLot::getParkedQuantity)
                 .filter(x -> x < 10)
                 .min().orElse(-1);
-        System.out.println(minQuantity);
         List<ParkingLot> parkingLotByParkCar = parkingLots.stream()
                 .filter(x -> x.getParkedQuantity() < 10 && x.getParkedQuantity() == minQuantity)
                 .collect(Collectors.toList());
