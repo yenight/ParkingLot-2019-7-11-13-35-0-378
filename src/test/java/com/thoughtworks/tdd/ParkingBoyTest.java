@@ -212,12 +212,9 @@ public class ParkingBoyTest {
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         //when
-        String wrongMessage = "";
         Ticket ticket = parkingBoy.park(car);
-        if (ticket == null) {
-           wrongMessage = parkingBoy.giveParkMessage(null);
-        }
         Car fetchCar = parkingBoy.fetch(ticket);
+
         //then
         assertSame(car, fetchCar);
     }
@@ -241,9 +238,33 @@ public class ParkingBoyTest {
         if (ticket == null) {
             wrongMessage = parkingBoy.giveParkMessage(null);
         }
+
         //then
         assertEquals("Not enough position.", wrongMessage);
     }
 
+    @Test
+    public void should_park_car_in_most_quantity_parking_lot_when__parking_lots_are_have_vacancy() {
+        //given
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingLot parkingSecondLot = new ParkingLot();
+        ParkingLot parkingThridLot = new ParkingLot();
+        parkingLot.setParkedQuantity(7);
+        parkingSecondLot.setParkedQuantity(5);
+        parkingThridLot.setParkedQuantity(10);
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        parkingLots.add(parkingSecondLot);
+        parkingLots.add(parkingThridLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+
+        //when
+        Ticket ticket = parkingBoy.park(car);
+        Car fetchCar = parkingBoy.fetch(ticket);
+
+        //then
+        assertSame(car, fetchCar);
+    }
 
 }
