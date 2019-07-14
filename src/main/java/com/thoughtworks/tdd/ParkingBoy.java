@@ -21,7 +21,7 @@ public class ParkingBoy {
     }
 
     public String giveMessage(Ticket ticket) {
-        if (ticket == null || ticket.isUsed()) {
+        if (ticket.isWrong() || ticket.isUsed()) {
             return "Unrecognized parking ticket.";
         } else {
             return "Right";

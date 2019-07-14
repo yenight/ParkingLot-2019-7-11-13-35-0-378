@@ -36,7 +36,7 @@ public class ParkingLot {
     }
 
     public Car getCar(Ticket ticket) {
-        if (ticket.isUsed()) {
+        if (ticket.isUsed() || ticket.isWrong()) {
             return null;
         }
         Car car = parkingCarTicket.get(ticket);

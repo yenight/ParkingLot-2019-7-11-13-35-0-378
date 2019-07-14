@@ -49,7 +49,7 @@ public class ParkingBoyTest {
         ParkingLot parkingLot = new ParkingLot();
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
         Ticket wrongTicket = new Ticket();
-
+        wrongTicket.setWrong(true);
         //when
         parkingBoy.park(car);
 
@@ -122,6 +122,8 @@ public class ParkingBoyTest {
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
         Ticket wrongTicket = new Ticket();
         wrongTicket.setUsed(true);
+        Ticket wrongSecondTicket = new Ticket();
+        wrongSecondTicket.setWrong(true);
         String wrongMessage = "", wrongSecondMessage = "";
 
         //when
@@ -131,10 +133,29 @@ public class ParkingBoyTest {
             wrongMessage = parkingBoy.giveMessage(wrongTicket);
         }
         if (fetchCar == null) {
-            wrongSecondMessage = parkingBoy.giveMessage(null);
+            wrongSecondMessage = parkingBoy.giveMessage(wrongSecondTicket);
         }
         //then
         assertEquals("Unrecognized parking ticket.", wrongMessage);
         assertEquals("Unrecognized parking ticket.", wrongSecondMessage);
     }
+
+    @Test
+    public void should_not_fetch_cars_and_get_a_message_when_not_provide_ticket() {
+        //given
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        String wrongMessage = "";
+
+        //when
+        Ticket ticket = parkingBoy.park(car);
+        Car fetchCar = parkingBoy.fetch(null);
+        if (fetchCar == null) {
+            wrongMessage = parkingBoy.giveMessage(null);
+        }
+        //then
+        assertEquals("Unrecognized parking ticket.", wrongMessage);
+    }
+
 }
