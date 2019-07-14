@@ -130,10 +130,10 @@ public class ParkingBoyTest {
         parkingBoy.park(car);
         Car fetchCar = parkingBoy.fetch(wrongTicket);
         if (fetchCar == null) {
-            wrongMessage = parkingBoy.giveMessage(wrongTicket);
+            wrongMessage = parkingBoy.giveFetchMessage(wrongTicket);
         }
         if (fetchCar == null) {
-            wrongSecondMessage = parkingBoy.giveMessage(wrongSecondTicket);
+            wrongSecondMessage = parkingBoy.giveFetchMessage(wrongSecondTicket);
         }
         //then
         assertEquals("Unrecognized parking ticket.", wrongMessage);
@@ -152,12 +152,27 @@ public class ParkingBoyTest {
         Ticket ticket = parkingBoy.park(car);
         Car fetchCar = parkingBoy.fetch(null);
         if (fetchCar == null) {
-            wrongMessage = parkingBoy.giveMessage(null);
+            wrongMessage = parkingBoy.giveFetchMessage(null);
         }
         //then
         assertEquals("Please provide your parking ticket.", wrongMessage);
     }
 
+    @Test
+    public void should_not_park_cars_and_get_a_message_when_parking_lot_is_fulled() {
+        //given
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        String wrongMessage = "";
+        parkingLot.setParkedQuantity(10);
 
-
+        //when
+        Ticket ticket = parkingBoy.park(car);
+        if (ticket == null) {
+            wrongMessage = parkingBoy.giveParkMessage(null);
+        }
+        //then
+        assertEquals("Not enough position.", wrongMessage);
+    }
 }
