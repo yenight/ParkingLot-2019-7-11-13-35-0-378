@@ -3,6 +3,9 @@ package com.thoughtworks.tdd;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
@@ -13,7 +16,9 @@ public class ParkingBoyTest {
         //given
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         //when
         Ticket ticket = parkingBoy.park(car);
@@ -29,7 +34,9 @@ public class ParkingBoyTest {
         Car secondCar = new Car();
 
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         //when
         Ticket firstTicket = parkingBoy.park(firstCar);
@@ -47,7 +54,9 @@ public class ParkingBoyTest {
         //given
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         Ticket wrongTicket = new Ticket();
         wrongTicket.setWrong(true);
         //when
@@ -62,7 +71,9 @@ public class ParkingBoyTest {
         //given
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         Ticket hadUsedTicket = new Ticket();
         hadUsedTicket.setUsed(true);
         //when
@@ -77,7 +88,9 @@ public class ParkingBoyTest {
         //given
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         parkingLot.setParkedQuantity(10);
         //when
         Ticket ticket = parkingBoy.park(car);
@@ -90,7 +103,9 @@ public class ParkingBoyTest {
     public void should_not_get_ticket_when_park_null_car() {
         //given
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         parkingLot.setParkedQuantity(10);
         //when
         Ticket ticket = parkingBoy.park(null);
@@ -104,7 +119,9 @@ public class ParkingBoyTest {
         //given
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         parkingLot.setParkedQuantity(10);
         //when
         Ticket ticket = parkingBoy.park(car);
@@ -119,7 +136,9 @@ public class ParkingBoyTest {
         //given
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         Ticket wrongTicket = new Ticket();
         wrongTicket.setUsed(true);
         Ticket wrongSecondTicket = new Ticket();
@@ -145,7 +164,9 @@ public class ParkingBoyTest {
         //given
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         String wrongMessage = "";
 
         //when
@@ -163,7 +184,9 @@ public class ParkingBoyTest {
         //given
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         String wrongMessage = "";
         parkingLot.setParkedQuantity(10);
 
@@ -174,5 +197,28 @@ public class ParkingBoyTest {
         }
         //then
         assertEquals("Not enough position.", wrongMessage);
+    }
+
+    @Test
+    public void should_park_cars_to_other_park_when_this_parking_lot_is_fulled() {
+        //given
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingLot parkingSecondLot = new ParkingLot();
+        parkingLot.setParkedQuantity(10);
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        parkingLots.add(parkingSecondLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+
+        //when
+        String wrongMessage = "";
+        Ticket ticket = parkingBoy.park(car);
+        if (ticket == null) {
+           wrongMessage = parkingBoy.giveParkMessage(null);
+        }
+        Car fetchCar = parkingBoy.fetch(ticket);
+        //then
+        assertSame(car, fetchCar);
     }
 }

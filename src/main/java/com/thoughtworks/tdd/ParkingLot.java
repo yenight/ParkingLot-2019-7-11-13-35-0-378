@@ -21,6 +21,10 @@ public class ParkingLot {
         return parkingCarTicket;
     }
 
+    public int getParkedQuantity() {
+        return parkedQuantity;
+    }
+
     public void setParkedQuantity(int parkedQuantity) {
         this.parkedQuantity = parkedQuantity;
     }
@@ -36,9 +40,6 @@ public class ParkingLot {
     }
 
     public Car getCar(Ticket ticket) {
-        if (ticket.isUsed() || ticket.isWrong()) {
-            return null;
-        }
         Car car = parkingCarTicket.get(ticket);
         if (car != null) {
             parkingCarTicket.remove(ticket);

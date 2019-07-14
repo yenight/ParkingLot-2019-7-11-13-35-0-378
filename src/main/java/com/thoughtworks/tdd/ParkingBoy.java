@@ -1,23 +1,29 @@
 package com.thoughtworks.tdd;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ParkingBoy {
 
-    private ParkingLot parkingLot;
+    private List<ParkingLot> parkingLots;
 
-    public ParkingBoy(ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
+    public ParkingBoy(List<ParkingLot> parkingLots) {
+        this.parkingLots = parkingLots;
     }
 
     public Ticket park(Car car) {
-        if (car != null && !parkingLot.getParkingCarTicket().containsValue(car)) {
-            return parkingLot.park(car);
+        List<ParkingLot> parkingLotByCarExist = parkingLots.stream().filter(x -> x.getParkingCarTicket().containsValue(car)).collect(Collectors.toList());
+        List<ParkingLot> parkingLotByParkCar = parkingLots.stream().filter(x -> x.getParkedQuantity() < 10).collect(Collectors.toList());
+        if (car != null && parkingLotByCarExist.size() == 0 && parkingLotByParkCar.size() > 0) {
+            return parkingLotByParkCar.get(0).park(car);
         } else {
             return null;
         }
     }
 
     public Car fetch(Ticket ticket) {
-        return ticket == null ? null : parkingLot.getCar(ticket);
+        List<ParkingLot> parkingLotByCar = parkingLots.stream().filter(x -> x.getParkingCarTicket().containsKey(ticket)).collect(Collectors.toList());
+        return (ticket == null || ticket.isWrong() || ticket.isUsed()) ? null : parkingLotByCar.get(0).getCar(ticket);
     }
 
     public String giveFetchMessage(Ticket ticket) {
