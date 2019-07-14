@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public class ParkingBoyTest {
 
+    //story1
     @Test
     public void should_return_car_when_park_car_to_parking_lot_then_get_it_back() {
         //given
@@ -131,6 +132,7 @@ public class ParkingBoyTest {
         assertSame(null, uselessTicket);
     }
 
+    //story2
     @Test
     public void should_not_fetch_cars_and_get_a_message_when_ticket_is_wrong() {
         //given
@@ -199,6 +201,7 @@ public class ParkingBoyTest {
         assertEquals("Not enough position.", wrongMessage);
     }
 
+    //story3
     @Test
     public void should_park_cars_to_other_park_when_this_parking_lot_is_fulled() {
         //given
@@ -243,6 +246,7 @@ public class ParkingBoyTest {
         assertEquals("Not enough position.", wrongMessage);
     }
 
+    //story4
     @Test
     public void should_park_car_in_most_quantity_parking_lot_when_parking_lots_are_have_vacancy() {
         //given
@@ -301,6 +305,7 @@ public class ParkingBoyTest {
         assertEquals("Please provide your parking ticket.", wrongMessage);
     }
 
+    //story5
     @Test
     public void should_park_car_in_most_quantity_parking_lot_when_parking_lots_are_have_different_capacity() {
         //given
@@ -367,6 +372,7 @@ public class ParkingBoyTest {
         assertEquals("Unrecognized parking ticket.", wrongSecondMessage);
     }
 
+    //story6
     @Test
     public void should_fetch_car_when_manager_call_parking_boy_parks_car() {
         //given
