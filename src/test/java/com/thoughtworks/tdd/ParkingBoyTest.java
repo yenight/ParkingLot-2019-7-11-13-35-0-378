@@ -155,7 +155,9 @@ public class ParkingBoyTest {
             wrongMessage = parkingBoy.giveMessage(null);
         }
         //then
-        assertEquals("Unrecognized parking ticket.", wrongMessage);
+        assertEquals("Please provide your parking ticket.", wrongMessage);
     }
+
+
 
 }

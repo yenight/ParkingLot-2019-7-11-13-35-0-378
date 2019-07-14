@@ -17,10 +17,11 @@ public class ParkingBoy {
     }
 
     public Car fetch(Ticket ticket) {
-        return parkingLot.getCar(ticket);
+        return ticket == null ? null : parkingLot.getCar(ticket);
     }
 
     public String giveMessage(Ticket ticket) {
+        if (ticket == null) return "Please provide your parking ticket.";
         if (ticket.isWrong() || ticket.isUsed()) {
             return "Unrecognized parking ticket.";
         } else {
