@@ -11,16 +11,16 @@ public class ParkingBoy {
         this.parkingLots = parkingLots;
     }
 
+    public List<ParkingLot> getParkingLots() {
+        return parkingLots;
+    }
+
     public Ticket park(Car car) {
         List<ParkingLot> parkingLotByCarExist = parkingLots.stream()
                 .filter(x -> x.getParkingCarTicket().containsValue(car))
                 .collect(Collectors.toList());
-        int minQuantity = parkingLots.stream()
-                .mapToInt(ParkingLot::getParkedQuantity)
-                .filter(x -> x < 10)
-                .min().orElse(-1);
         List<ParkingLot> parkingLotByParkCar = parkingLots.stream()
-                .filter(x -> x.getParkedQuantity() < 10 && x.getParkedQuantity() == minQuantity)
+                .filter(x -> x.getParkedQuantity() < 10)
                 .collect(Collectors.toList());
         if (car != null && parkingLotByCarExist.size() == 0 && parkingLotByParkCar.size() > 0) {
             return parkingLotByParkCar.get(0).park(car);

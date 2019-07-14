@@ -247,17 +247,20 @@ public class ParkingBoyTest {
     public void should_park_car_in_most_quantity_parking_lot_when__parking_lots_are_have_vacancy() {
         //given
         Car car = new Car();
+
         ParkingLot parkingLot = new ParkingLot();
         ParkingLot parkingSecondLot = new ParkingLot();
         ParkingLot parkingThridLot = new ParkingLot();
         parkingLot.setParkedQuantity(7);
         parkingSecondLot.setParkedQuantity(5);
         parkingThridLot.setParkedQuantity(10);
+
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot);
         parkingLots.add(parkingSecondLot);
         parkingLots.add(parkingThridLot);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+
+        SmartParkingBoy parkingBoy = new SmartParkingBoy(parkingLots);
 
         //when
         Ticket ticket = parkingBoy.park(car);
