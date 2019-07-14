@@ -3,6 +3,7 @@ package com.thoughtworks.tdd;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public class ParkingBoyTest {
@@ -53,9 +54,6 @@ public class ParkingBoyTest {
         parkingBoy.park(car);
 
         //then
-//        Assertions.assertThrows(Exception.class, () -> {
-//            parkingBoy.fetch(wrongTicket);
-//        });
         assertSame(null, parkingBoy.fetch(wrongTicket));
     }
 
@@ -114,5 +112,29 @@ public class ParkingBoyTest {
 
         //then
         assertSame(null, uselessTicket);
+    }
+
+    @Test
+    public void should_not_fetch_cars_and_get_a_message_when_ticket_is_wrong() {
+        //given
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        Ticket wrongTicket = new Ticket();
+        wrongTicket.setUsed(true);
+        String wrongMessage = "", wrongSecondMessage = "";
+
+        //when
+        parkingBoy.park(car);
+        Car fetchCar = parkingBoy.fetch(wrongTicket);
+        if (fetchCar == null) {
+            wrongMessage = parkingBoy.giveMessage(wrongTicket);
+        }
+        if (fetchCar == null) {
+            wrongSecondMessage = parkingBoy.giveMessage(null);
+        }
+        //then
+        assertEquals("Unrecognized parking ticket.", wrongMessage);
+        assertEquals("Unrecognized parking ticket.", wrongSecondMessage);
     }
 }

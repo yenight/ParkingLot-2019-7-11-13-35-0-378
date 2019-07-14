@@ -14,11 +14,17 @@ public class ParkingBoy {
         } else {
             return null;
         }
-
     }
 
     public Car fetch(Ticket ticket) {
         return parkingLot.getCar(ticket);
+    }
 
+    public String giveMessage(Ticket ticket) {
+        if (ticket == null || ticket.isUsed()) {
+            return "Unrecognized parking ticket.";
+        } else {
+            return "Right";
+        }
     }
 }

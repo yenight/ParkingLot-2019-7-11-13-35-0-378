@@ -21,10 +21,6 @@ public class ParkingLot {
         return parkingCarTicket;
     }
 
-    public int getParkedQuantity() {
-        return parkedQuantity;
-    }
-
     public void setParkedQuantity(int parkedQuantity) {
         this.parkedQuantity = parkedQuantity;
     }
