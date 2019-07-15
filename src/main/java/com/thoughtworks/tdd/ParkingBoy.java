@@ -1,5 +1,6 @@
 package com.thoughtworks.tdd;
 
+import java.rmi.server.ExportException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,7 +16,7 @@ public class ParkingBoy {
         return parkingLots;
     }
 
-    public Ticket park(Car car) {
+    public Ticket park(Car car) throws Exception{
         List<ParkingLot> parkingLotByCarExist = parkingLots.stream()
                 .filter(x -> x.getParkingCarTicket().containsValue(car))
                 .collect(Collectors.toList());
@@ -25,15 +26,22 @@ public class ParkingBoy {
         if (car != null && parkingLotByCarExist.size() == 0 && parkingLotByParkCar.size() > 0) {
             return parkingLotByParkCar.get(0).park(car);
         } else {
-            return null;
+            throw new Exception("Not enough position.");
         }
     }
 
-    public Car fetch(Ticket ticket) {
+    public Car fetch(Ticket ticket) throws Exception{
         List<ParkingLot> parkingLotByCar = parkingLots.stream()
                 .filter(x -> x.getParkingCarTicket().containsKey(ticket))
                 .collect(Collectors.toList());
-        return (ticket == null || ticket.isWrong() || ticket.isUsed()) ? null : parkingLotByCar.get(0).getCar(ticket);
+
+        if (ticket == null) {
+            throw new Exception("Please provide your parking ticket.");
+        } else if (ticket.isWrong() || ticket.isUsed()){
+            throw new Exception("Unrecognized parking ticket.");
+        } else {
+            return parkingLotByCar.get(0).getCar(ticket);
+        }
     }
 
     public String giveFetchMessage(Ticket ticket) {

@@ -14,11 +14,11 @@ public class ParkingManager extends ParkingBoy{
         return parkingBoyList;
     }
 
-    public Ticket callParkingBoyParkCar(ParkingBoy parkingBoy, Car car) {
+    public Ticket callParkingBoyParkCar(ParkingBoy parkingBoy, Car car) throws Exception {
         return parkingBoy.park(car);
     }
 
-    public Car callParkingBoyFetchCar(ParkingBoy parkingBoy, Ticket ticket) {
+    public Car callParkingBoyFetchCar(ParkingBoy parkingBoy, Ticket ticket) throws Exception{
         return parkingBoy.fetch(ticket);
     }
 
